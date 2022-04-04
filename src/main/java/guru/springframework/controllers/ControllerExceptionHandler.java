@@ -15,17 +15,14 @@ import org.springframework.web.servlet.ModelAndView;
 public class ControllerExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(NumberFormatException.class)
-    public ModelAndView handleNumberFormat(Exception exception){
+    @ExceptionHandler(WebExchangeBindException.class)
+    public String handleNumberFormat(Exception exception, Model model){
 
-        log.error("Handling Number Format Exception");
+        log.error("Handling Binding Exception");
         log.error(exception.getMessage());
 
-        ModelAndView modelAndView = new ModelAndView();
+        model.addAttribute("exception", exception);
 
-        modelAndView.setViewName("400error");
-        modelAndView.addObject("exception", exception);
-
-        return modelAndView;
+        return "400error";
     }
 }
